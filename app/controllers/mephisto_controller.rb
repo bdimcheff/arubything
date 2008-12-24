@@ -117,6 +117,7 @@ class MephistoController < ApplicationController
     end
     
     def dispatch_tags
+      show_404 and return if @dispatch_path.size > 1 # keep site from exploding
       @articles = site.articles.find_all_by_tags(@dispatch_path, site.articles_per_page)
       render_liquid_template_for(:tag, 'articles' => @articles, 'tags' => @dispatch_path)
     end

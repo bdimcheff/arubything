@@ -85,8 +85,12 @@ class Article < Content
     end
     
     def find_all_by_tags(tag_names, limit = 15)
-      find(:all, :order => 'contents.published_at DESC', :include => [:tags, :user], :limit => limit,
+      articles = find(:all, :order => 'contents.published_at DESC', :include => [:tags, :user], :limit => limit,
         :conditions => ['(contents.published_at <= ? AND contents.published_at IS NOT NULL) AND tags.name IN (?)', Time.now.utc, tag_names])
+      
+      # really bad patch
+      find(:all, :order => 'contents.published_at DESC', :include => [:tags, :user],
+           :conditions => ['contents.id IN (?)', articles.collect {|a| a.id}])
     end
     
     def permalink_for(str)
