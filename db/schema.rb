@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20081219130711) do
+ActiveRecord::Schema.define(:version => 20081223221228) do
 
   create_table "assets", :force => true do |t|
     t.string   "content_type"
@@ -168,18 +168,18 @@ ActiveRecord::Schema.define(:version => 20081219130711) do
     t.text    "ping_urls"
     t.integer "articles_per_page",                 :default => 15
     t.string  "host"
-    t.string  "akismet_key",        :limit => 100
-    t.string  "akismet_url"
     t.boolean "approve_comments"
     t.integer "comment_age"
     t.string  "timezone"
-    t.string  "filter"
+    t.string  "filter",                            :default => "textile_filter"
     t.string  "permalink_style"
     t.string  "search_path"
     t.string  "tag_path"
     t.string  "tag_layout"
     t.string  "current_theme_path"
-    t.string  "lang",                              :default => "en-US", :null => false
+    t.string  "akismet_key",        :limit => 100
+    t.string  "akismet_url"
+    t.string  "lang",                              :default => "en-US",          :null => false
   end
 
   add_index "sites", ["host"], :name => "index_sites_on_host"
@@ -206,7 +206,7 @@ ActiveRecord::Schema.define(:version => 20081219130711) do
     t.datetime "deleted_at"
     t.string   "token"
     t.datetime "token_expires_at"
-    t.string   "filter"
+    t.string   "filter",                          :default => "textile_filter"
     t.boolean  "admin",                           :default => false
   end
 
